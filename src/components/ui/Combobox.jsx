@@ -19,16 +19,18 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const frameworks = [
-  {value:"", label:"None"},
-  {value:"Indoor", label:"Indoor"},
-  {value:"Outdoor", label:"Outdoor"},
-  
-]
+const plantCategories = [
+  { value: "Flowering", label: "Flowering" },
+  { value: "Herb", label: "Herb" },
+  { value: "Fern", label: "Fern" },
+  { value: "Tree", label: "Tree" },
+  { value: "Shrub", label: "Shrub" },
+];
 
-export function ComboboxDemo() {
+export function Combobox({ value, onChange }) {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+
+  const selectedCategory = plantCategories.find((cat) => cat.value === value);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -39,32 +41,35 @@ export function ComboboxDemo() {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select framework..."}
+          <div className="flex items-center gap-2">
+            <span>
+              {selectedCategory?.label || "Select category..."}
+            </span>
+          </div>
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." className="h-9" />
+          <CommandInput placeholder="Search category..." className="h-9" />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No category found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {plantCategories.map((cat) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={cat.value}
+                  value={cat.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
+                    onChange(currentValue === value ? "" : currentValue)
                     setOpen(false)
                   }}
+                  className="flex items-center gap-2"
                 >
-                  {framework.label}
+                  <span>{cat.label}</span>
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      value === cat.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>

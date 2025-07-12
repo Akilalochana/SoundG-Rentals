@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -9,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { useState } from "react";
 
 const plants = [
     {
@@ -47,6 +50,7 @@ const plants = [
 ];
 
 export default function InventoryTable() {
+  const [selectedPlant, setSelectedPlant] = useState('');
   return (
 
     <div className="w-full">
@@ -60,7 +64,7 @@ export default function InventoryTable() {
                  <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
 
             </div>
-            
+            {/* <Combobox /> */}
         </div>
 
         <Table>
