@@ -10,7 +10,11 @@ async function page() {
     <>
     {user ?(
         <>
-        <InventoryTable/>
+        <div className='mt-7 max-w-7xl mx-auto px-1 grid grid-cols-1  lg:grid-cols-10 gap-5'>
+            <div className='lg:col-span-full'>
+                <InventoryTable />
+            </div>
+        </div>
         </>
     
     ) : (

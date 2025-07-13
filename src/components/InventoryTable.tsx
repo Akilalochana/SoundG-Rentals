@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { Combobox } from "@/components/ui/combo-box";
 
 const plants = [
     {
@@ -51,6 +52,7 @@ const plants = [
 
 export default function InventoryTable() {
   const [selectedPlant, setSelectedPlant] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   return (
 
     <div className="w-full">
@@ -64,10 +66,10 @@ export default function InventoryTable() {
                  <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
 
             </div>
-            {/* <Combobox /> */}
+            <Combobox value={selectedCategory} onChange={(val: string)=> setSelectedCategory(val)} />
         </div>
 
-        <Table>
+        <Table >
       
       <TableHeader>
         <TableRow>
