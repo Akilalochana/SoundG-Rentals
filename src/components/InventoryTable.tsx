@@ -55,7 +55,7 @@ export default function InventoryTable() {
   const [selectedCategory, setSelectedCategory] = useState('');
   return (
 
-    <div className="w-full">
+    <div className="w-full ">
 
         <div className="flex items-center gap-2 py-4">
             <div className="relative max-w-sm w-full">
