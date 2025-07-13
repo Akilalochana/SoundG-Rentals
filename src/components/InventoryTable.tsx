@@ -13,46 +13,25 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { Combobox } from "@/components/ui/combo-box";
+import { getPlants } from "@/actions/plant.action";
 
-const plants = [
-    {
-        id: "1",
-        name: "Aloe Vera",
-        category: "Succulent",
-        price: "$10.00",
-        stock: 50,
-        totalAmount: "$500.00",
-    },
-    {
-        id: "2",
-        name: "Snake Plant",
-        category: "Indoor",
-        price: "$15.00",
-        stock: 30,
-        totalAmount: "$450.00",
-    },
-    {
-        id: "3",
-        name: "Spider Plant",
-        category: "Indoor",
-        price: "$12.00",
-        stock: 20,
-        totalAmount: "$240.00",
-    },
-    {
-        id: "4",
-        name: "Fiddle Leaf Fig",
-        category: "Indoor",
-        price: "$25.00",
-        stock: 15,
-        totalAmount: "$375.00",
-    },
-  
-];
 
-export default function InventoryTable() {
-  const [selectedPlant, setSelectedPlant] = useState('');
+
+type PlantData = Awaited<ReturnType<typeof getPlants>>;
+
+interface InventoryTableProps {
+  plants: PlantData;
+}
+
+export default function InventoryTable({ plants }: InventoryTableProps) {
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState('');
+
+  // Filter plants based on search term and selected category
+  const filteredPlants = plants?.userPlants?.filter((plant: any) =>
+    plant.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (selectedCategory === "" || plant.category === selectedCategory)
+  );
   return (
 
     <div className="w-full ">
@@ -62,6 +41,8 @@ export default function InventoryTable() {
                 <Input
                 placeholder="Search..." 
                 className="pl-10"
+                value={searchTerm} 
+                onChange={(e) => setSearchTerm(e.target.value)}
                  />
                  <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
 
@@ -82,11 +63,12 @@ export default function InventoryTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {plants.map((plant) => (
+        {filteredPlants?.map((plant: any) => (
           <TableRow key={plant.id}>
+            <TableCell>{plant.id}</TableCell>
             <TableCell>{plant.name}</TableCell>
             <TableCell>{plant.category}</TableCell>
-            <TableCell>{plant.price}</TableCell>
+            <TableCell>${plant.price}</TableCell>
             <TableCell className="font-bold">{plant.stock}</TableCell>
 
             <TableCell className="text-right">

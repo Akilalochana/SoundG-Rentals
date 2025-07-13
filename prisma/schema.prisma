@@ -6,7 +6,7 @@ datasource db {
      url      = env("DATABASE_URL")
 }
 
-model plant {
+model Plants {
     id String @id @default(cuid())
     name String
     description String?
