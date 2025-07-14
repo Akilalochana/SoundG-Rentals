@@ -18,20 +18,20 @@ interface Contact7Props {
 }
 
 const ContactUs = ({
-  title = "Contact Us",
-  description = "Contact the support team at Shadcnblocks.",
+  title = "Get in Touch",
+  description = "Contact our team for audio equipment rentals, technical support, or booking information.",
   emailLabel = "Email",
-  emailDescription = "We respond to all emails within 24 hours.",
-  email = "example@shadcnblocks.com",
-  officeLabel = "Office",
-  officeDescription = "Drop by our office for a chat.",
-  officeAddress = "1 Eagle St, Brisbane, QLD, 4000",
-  phoneLabel = "Phone",
-  phoneDescription = "We're available Mon-Fri, 9am-5pm.",
-  phone = "+123 456 7890",
-  chatLabel = "Live Chat",
-  chatDescription = "Get instant help from our support team.",
-  chatLink = "Start Chat",
+  emailDescription = "We respond to rental inquiries within 4 hours during business hours.",
+  email = "rentals@soundgear.com",
+  officeLabel = "Warehouse & Showroom",
+  officeDescription = "Visit our showroom to test equipment before renting.",
+  officeAddress = "123 Sound Avenue, Music District, NY 10001",
+  phoneLabel = "24/7 Support Line",
+  phoneDescription = "Technical support available for all rented equipment.",
+  phone = "+1 (555) 123-4567",
+  chatLabel = "Quote Request",
+  chatDescription = "Get a quick quote for your event or production needs.",
+  chatLink = "Request Quote",
 }: Contact7Props) => {
   return (
     <section className="bg-background py-32 px-4 md:px-8 lg:px-16">

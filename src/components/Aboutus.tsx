@@ -32,64 +32,64 @@ interface About3Props {
   }>;
 }
 
-const defaultCompanies = [
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-1.svg",
-    alt: "Arc",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-2.svg",
-    alt: "Descript",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-3.svg",
-    alt: "Mercury",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-4.svg",
-    alt: "Ramp",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-5.svg",
-    alt: "Retool",
-  },
-  {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-6.svg",
-    alt: "Watershed",
-  },
-];
+// const defaultCompanies = [
+//   {
+//     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-1.svg",
+//     alt: "Arc",
+//   },
+//   {
+//     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-2.svg",
+//     alt: "Descript",
+//   },
+//   {
+//     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-3.svg",
+//     alt: "Mercury",
+//   },
+//   {
+//     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-4.svg",
+//     alt: "Ramp",
+//   },
+//   {
+//     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-5.svg",
+//     alt: "Retool",
+//   },
+//   {
+//     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-6.svg",
+//     alt: "Watershed",
+//   },
+// ];
 
 const defaultAchievements = [
-  { label: "Companies Supported", value: "300+" },
-  { label: "Projects Finalized", value: "800+" },
-  { label: "Happy Customers", value: "99%" },
-  { label: "Recognized Awards", value: "10+" },
+  { label: "Audio Equipment Rentals", value: "500+" },
+  { label: "Events Supported", value: "1200+" },
+  { label: "Happy Clients", value: "99%" },
+  { label: "Years in Business", value: "15+" },
 ];
 
 const Aboutus = ({
-  title = "About Us",
-  description = "Shadcnblocks is a passionate team dedicated to creating innovative solutions that empower businesses to thrive in the digital age.",
+  title = "About SoundGear",
+  description = "SoundGear is a premium audio equipment rental service dedicated to providing top-quality sound solutions for events, productions, and professional studios.",
   mainImage = {
-    src: "https://images.pexels.com/photos/1207978/pexels-photo-1207978.jpeg",
-    alt: "placeholder",
+    src: "https://images.pexels.com/photos/164938/pexels-photo-164938.jpeg",
+    alt: "Professional audio mixing console",
   },
   secondaryImage = {
-    src: "https://images.pexels.com/photos/213727/pexels-photo-213727.jpeg",
-    alt: "placeholder",
+    src: "https://images.pexels.com/photos/4792733/pexels-photo-4792733.jpeg",
+    alt: "Professional microphone setup",
   },
   breakout = {
-    src: "https://images.pexels.com/photos/1005058/pexels-photo-1005058.jpeg",
-    alt: "logo",
-    title: "Hundreds of blocks at Shadcnblocks.com",
+    src: "https://images.pexels.com/photos/3784566/pexels-photo-3784566.jpeg",
+    alt: "Sound engineer working",
+    title: "Premium Equipment Selection",
     description:
-      "Providing businesses with effective tools to improve workflows, boost efficiency, and encourage growth.",
-    buttonText: "Discover more",
-    buttonUrl: "https://shadcnblocks.com",
+      "We offer the latest and most reliable audio equipment for rent, ensuring your event or production has crystal clear sound.",
+    buttonText: "Browse Equipment",
+    buttonUrl: "/plants", // This will need to be updated once we rename the route
   },
-  companiesTitle = "Valued by clients worldwide",
-  companies = defaultCompanies,
-  achievementsTitle = "Our Achievements in Numbers",
-  achievementsDescription = "Providing businesses with effective tools to improve workflows, boost efficiency, and encourage growth.",
+  // companiesTitle = "Trusted by industry professionals",
+  // companies = defaultCompanies,
+  achievementsTitle = "Our Success in Numbers",
+  achievementsDescription = "With years of experience in the audio equipment rental business, we've helped countless clients create unforgettable sound experiences.",
   achievements = defaultAchievements,
 }: About3Props = {}) => {
   return (
@@ -129,8 +129,8 @@ const Aboutus = ({
             />
           </div>
         </div>
-        <div className="py-32">
-          <p className="text-center">{companiesTitle} </p>
+        <div className="py-5">
+          {/* <p className="text-center">{companiesTitle} </p>
           <div className="mt-8 flex flex-wrap justify-center gap-8">
             {companies.map((company, idx) => (
               <div className="flex items-center gap-3" key={company.src + idx}>
@@ -141,7 +141,7 @@ const Aboutus = ({
                 />
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
         <div className="relative overflow-hidden rounded-xl bg-muted p-10 md:p-16">
           <div className="flex flex-col gap-4 text-center md:text-left">

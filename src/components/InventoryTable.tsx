@@ -15,7 +15,9 @@ import { useState } from "react";
 import { Combobox } from "@/components/ui/combo-box";
 import { getPlants } from "@/actions/plant.action";
 import { useRouter } from "next/navigation";
-import AlertDialogDemo from "./ui/CreateDialog";
+import CreateDialog from "./ui/CreateDialog";
+import EditDialog from "./ui/EditDiaolg";
+import DeleteButton from "./ui/DeleteButton";
 
 
 
@@ -53,7 +55,7 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
             </div>
             <Combobox value={selectedCategory} onChange={(val: string)=> setSelectedCategory(val)} />
 
-            <AlertDialogDemo/>
+            <CreateDialog/>
         </div>
 
         
@@ -62,11 +64,11 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
       
       <TableHeader>
         <TableRow>
-          <TableHead>Plant ID</TableHead>
+          <TableHead>Equipment ID</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Category</TableHead>
-          <TableHead>Price</TableHead>
-          <TableHead>Stock</TableHead>
+          <TableHead>Daily Rate</TableHead>
+          <TableHead>Available Units</TableHead>
           <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
@@ -85,10 +87,10 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
             <TableCell>${plant.price}</TableCell>
             <TableCell className="font-bold">{plant.stock}</TableCell>
 
-            <TableCell className="text-right">
-                <div className="flex justify-end space-x-4">
-                  <h1>Edit Button</h1>
-                  <h1>Delete Button</h1>
+            <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                <div className="flex justify-end space-x-2">
+                  <EditDialog plant={plant} />
+                  <DeleteButton plantId={plant.id} plantName={plant.name} onDelete={() => router.refresh()} />
                 </div>
             </TableCell>
           </TableRow>

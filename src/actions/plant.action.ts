@@ -27,10 +27,13 @@ export async function  getPlants(searchTerm?: string) {
         
     }
     catch (error) {
-        console.error("Error fetching plants:", error);
-        throw new Error("Failed to fetch plants");
+        console.error("Error fetching equipment:", error);
+        throw new Error("Failed to fetch equipment");
     }
 }
+
+// Note: We're keeping the function name as getPlants to avoid breaking existing code,
+// but this now returns audio equipment data instead of plants
 
 
 export async function getPlantById(id: string) {
@@ -40,24 +43,24 @@ export async function getPlantById(id: string) {
 }
 
 
-// Define our own interface for plant creation from the client side
+// Define our own interface for equipment creation from the client side
 interface PlantsCreateInput {
     name: string;
     description?: string;
     category: string;
-    stock: number;
-    price: number;
+    stock: number;  // Represents available units for audio equipment
+    price: number;  // Represents daily rental rate for audio equipment
     imageUrl?: string;
 }
 
 export async function createPlant(data: PlantsCreateInput) {
-    console.log("Creating plant");
+    console.log("Creating equipment");
     console.log(data);
     try {
         const currentUserId = await getUserId();
         if(!currentUserId) return;
         
-        const newPlant = await prisma.plants.create({
+        const newEquipment = await prisma.plants.create({
             data: {
                 ...data,
                 userId: currentUserId,
@@ -65,9 +68,65 @@ export async function createPlant(data: PlantsCreateInput) {
         });
         
         revalidatePath("/plants");
-        return newPlant;
+        return newEquipment;
     } catch (error) {
-        console.error("Error Creating Plant:", error);
+        console.error("Error Creating Equipment:", error);
+        throw error;
+    }
+}
+
+
+export async function editPlant(
+    id: string,
+    data: Prisma.PlantsUpdateInput
+) {
+    try {
+        const currentUserId = await getUserId();
+        if (!currentUserId) return;
+
+        const updatedEquipment = await prisma.plants.update({
+            where: { id },
+            data: {
+                ...data,
+                userId: currentUserId,
+            }
+        });
+
+        revalidatePath(`/plants/${id}`);
+        revalidatePath(`/plants`);
+        return updatedEquipment;
+    } catch (error) {
+        console.error("Error updating equipment:", error);
+        throw error;
+    }
+}
+
+export async function deletePlant(id: string) {
+    try {
+        const currentUserId = await getUserId();
+        if (!currentUserId) return;
+
+        // Check if the equipment belongs to the current user
+        const equipment = await prisma.plants.findFirst({
+            where: { 
+                id,
+                userId: currentUserId 
+            }
+        });
+
+        if (!equipment) {
+            throw new Error("Equipment not found or you don't have permission to delete it");
+        }
+
+        // Delete the equipment
+        const deletedEquipment = await prisma.plants.delete({
+            where: { id }
+        });
+
+        revalidatePath(`/plants`);
+        return deletedEquipment;
+    } catch (error) {
+        console.error("Error deleting equipment:", error);
         throw error;
     }
 }

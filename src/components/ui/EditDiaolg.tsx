@@ -15,19 +15,38 @@ import { Label } from "@radix-ui/react-label";
 import { Textarea } from "./textarea";
 import { Input } from "./input";
 import { useState } from "react";
-import { createPlant } from "@/actions/plant.action";
-import {toast} from "react-hot-toast";
+import { createPlant, editPlant, deletePlant } from "@/actions/plant.action";
+import { Pencil, Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
+import { getPlantById } from "@/actions/plant.action";
 
-export default function CreateDialog() {
+type Plant = Awaited<ReturnType<typeof getPlantById>>;
+
+interface Plant {
+  id: string;
+  name: string;
+  description: string | null;
+  category: string;
+  stock: number;
+  price: number;
+  userId: string;
+  imageUrl?: string | null;
+}
+
+interface PlantCardProps {
+  plant: Plant;
+}
+
+export default function EditDialog({ plant }: PlantCardProps) {
     
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState({
-        name: "",
-        category: "",
-        description: "",
-        stock: 0, // Initialize as number
-        price: 0, // Initialize as number
-        imageUrl: "",
+        name: plant?.name || "",
+        category: plant?.category || "",
+        description: plant?.description || "",
+        stock: plant?.stock || 0,
+        price: plant?.price || 0,
+        imageUrl: plant?.imageUrl || "",
     });
 
     const handleChange = (field: string, value: string|number) => {
@@ -44,7 +63,7 @@ export default function CreateDialog() {
         e.preventDefault();
         setIsSubmitting(true);
         try {
-            // Create the submission data with proper types
+            // Prepare the data with proper types
             const formDataToSubmit = {
                 name: formData.name,
                 category: formData.category,
@@ -56,31 +75,35 @@ export default function CreateDialog() {
             
             console.log("Form Data Submitted:", formDataToSubmit);
             
-
-            const newPlant = await createPlant(formDataToSubmit);
-            // Reset form or show success message
-            if (newPlant) {
-                console.log("Plant created successfully!", newPlant);
-                // Reset form after successful creation
-                setFormData({
-                    name: "",
-                    category: "",
-                    description: "",
-                    stock: 0,
-                    price: 0,
-                    imageUrl: "",
-                });
-                // Show success toast
-                toast.success(`${newPlant.name} has been added successfully!`);
+            // Update the plant
+            const updatedPlant = await editPlant(plant.id, formDataToSubmit);
+            
+            if (updatedPlant) {
+                console.log("Plant updated successfully!", updatedPlant);
+                toast.success(`${updatedPlant.name} has been updated successfully!`);
+                // You might want to close the dialog here
             }
         } catch(e) {
-            console.error("Error submitting form:", e);
-            // toast({
-            //     title: "Error",
-            //     description: "Failed to create equipment. Please try again.",
-            //     variant: "destructive",
-            // });
-            toast.error("Failed to add equipment. Please try again.");
+            console.error("Error updating plant:", e);
+            toast.error("Failed to update plant. Please try again.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+    
+    const handleDelete = async () => {
+        if (!confirm("Are you sure you want to delete this plant? This action cannot be undone.")) {
+            return;
+        }
+        
+        setIsSubmitting(true);
+        try {
+            await deletePlant(plant.id);
+            toast.success(`${plant.name} has been deleted successfully!`);
+            // You might want to navigate away or close the dialog here
+        } catch (e) {
+            console.error("Error deleting plant:", e);
+            toast.error("Failed to delete plant. Please try again.");
         } finally {
             setIsSubmitting(false);
         }
@@ -89,13 +112,15 @@ export default function CreateDialog() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Add New Equipment</Button>
+        <Button variant="outline" size="icon">
+          <Pencil className="h-4 w-4" />
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Add Audio Equipment</AlertDialogTitle>
+          <AlertDialogTitle>Edit Plant</AlertDialogTitle>
           <AlertDialogDescription className="text-[15px]">
-            Please fill out the details for the new audio equipment item you want to add to the rental inventory.
+            Make changes to your plant information below.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -103,7 +128,7 @@ export default function CreateDialog() {
             <div>
                 <div>
                     <Label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                        Equipment Name
+                        Plant Name
                     </Label>
                     <Input
                         type="text"
@@ -112,7 +137,7 @@ export default function CreateDialog() {
                         required
                         value={formData.name}
                         onChange={(e) => handleChange("name", e.target.value)}
-                        placeholder="Enter equipment name"
+                        placeholder="Enter plant name"
                         className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                     />
                 </div>
@@ -134,13 +159,13 @@ export default function CreateDialog() {
                 required
                 value={formData.description}
                 onChange={(e) => handleChange("description", e.target.value)}
-                placeholder="Enter equipment description, specifications, and features"
+                placeholder="Enter plant description"
                 
             />
             <div className="grid grid-cols-2 gap-4 mt-4">
                 <div>
                     <Label htmlFor="stock">
-                        Available Units
+                        Stock
                     </Label> 
                     <Input
                         type="number"
@@ -155,7 +180,7 @@ export default function CreateDialog() {
                 </div>
                 <div>
                     <Label htmlFor="price">
-                        Daily Rental Rate
+                        Price
                     </Label>
                     <Input
                         type="number"
@@ -169,14 +194,26 @@ export default function CreateDialog() {
             </div>
         </div>
 
-        <h1>Upload Equipment Images</h1>
+        <h1>upload images</h1>
        
 
-        <AlertDialogFooter>
-          <AlertDialogCancel disabled={isSubmitting}>Cancel</AlertDialogCancel>
-          <AlertDialogAction type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Submitting..." : "Submit"}
-          </AlertDialogAction>
+        <AlertDialogFooter className="flex justify-between">
+          <Button 
+            variant="destructive" 
+            type="button"
+            onClick={handleDelete}
+            disabled={isSubmitting}
+          >
+            <Trash2 className="h-4 w-4 mr-2" />
+            Delete
+          </Button>
+          
+          <div className="flex gap-2">
+            <AlertDialogCancel disabled={isSubmitting}>Cancel</AlertDialogCancel>
+            <AlertDialogAction type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Saving..." : "Save Changes"}
+            </AlertDialogAction>
+          </div>
         </AlertDialogFooter>
 
         </form>

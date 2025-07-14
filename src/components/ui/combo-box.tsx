@@ -20,11 +20,13 @@ import {
 } from "@/components/ui/popover"
 
 const plantCategories = [
-  { value: "indorr", label: "indorr" },
-  { value: "Herb", label: "Herb" },
-  { value: "Fern", label: "Fern" },
-  { value: "Tree", label: "Tree" },
-  { value: "Shrub", label: "Shrub" },
+  { value: "Microphones", label: "Microphones" },
+  { value: "Speakers", label: "Speakers" },
+  { value: "Mixers", label: "Mixers" },
+  { value: "DJ Equipment", label: "DJ Equipment" },
+  { value: "Studio Gear", label: "Studio Gear" },
+  { value: "Lighting", label: "Lighting" },
+  { value: "Cables & Accessories", label: "Cables & Accessories" },
 ];
 
 interface ComboboxProps {

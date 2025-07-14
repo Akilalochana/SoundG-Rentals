@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { Button } from './ui/button'
-import { HomeIcon, LogIn, LogInIcon, LogOut, Sprout } from 'lucide-react'
+import { HomeIcon, LogIn, LogInIcon, LogOut, Music, Sprout } from 'lucide-react'
 import { ModeToggle } from './ModeToggle'
 import { stackServerApp } from '@/stack'
 import { getUserDetails } from '@/actions/user.action'
@@ -22,7 +22,7 @@ async function Navbar() {
       
         <div className='flex items-center'>
             <Link href='/' className='text-xl font-bold text-primary font-mono traking-wider'>
-                Grow Plants🌿
+                Sound G🎧
             </Link>
         </div>
 
@@ -31,8 +31,8 @@ async function Navbar() {
         <div className='hidden md:flex items-center space-x-4'>
           <Button variant="ghost" className='flex items-center gap-2' asChild>
             <Link href="/plants">
-              <Sprout className='w-4 h-4' />
-              <span className='hidden lg:inline'>Plants</span>
+              <Music className='w-4 h-4' />
+              <span className='hidden lg:inline'>instruments</span>
             </Link>
           </Button>
 
