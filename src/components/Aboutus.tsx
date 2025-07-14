@@ -86,8 +86,25 @@ const Aboutus = ({
     buttonText: "Browse Equipment",
     buttonUrl: "/plants", // This will need to be updated once we rename the route
   },
-  // companiesTitle = "Trusted by industry professionals",
-  // companies = defaultCompanies,
+  companiesTitle = "Trusted by industry professionals",
+  companies = [
+    {
+      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-1.svg",
+      alt: "Client 1",
+    },
+    {
+      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-2.svg",
+      alt: "Client 2",
+    },
+    {
+      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-3.svg",
+      alt: "Client 3",
+    },
+    {
+      src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/company/fictional-company-logo-4.svg",
+      alt: "Client 4",
+    },
+  ],
   achievementsTitle = "Our Success in Numbers",
   achievementsDescription = "With years of experience in the audio equipment rental business, we've helped countless clients create unforgettable sound experiences.",
   achievements = defaultAchievements,
