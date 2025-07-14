@@ -15,6 +15,7 @@ import { useState } from "react";
 import { Combobox } from "@/components/ui/combo-box";
 import { getPlants } from "@/actions/plant.action";
 import { useRouter } from "next/navigation";
+import AlertDialogDemo from "./ui/CreateDialog";
 
 
 
@@ -51,7 +52,11 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
 
             </div>
             <Combobox value={selectedCategory} onChange={(val: string)=> setSelectedCategory(val)} />
+
+            <AlertDialogDemo/>
         </div>
+
+        
 
         <Table >
       
@@ -70,7 +75,7 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
           const slugifiedName = plant.name.toLowerCase().replace(/\s+/g, '-');
           const slug = `${plant.id}--${slugifiedName}`;
           const plantUrl = `/plants/${slug}`;
-          
+
           return(
 
           <TableRow key={plant.id} onClick={()=> router.push(plantUrl)}>
