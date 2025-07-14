@@ -18,7 +18,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
-    if (!confirm(`Are you sure you want to delete ${plantName}? This action cannot be undone.`)) {
+    if (!confirm(`Are you sure you want to delete ${plantName} from your equipment inventory? This action cannot be undone.`)) {
       return;
     }
     
@@ -28,8 +28,8 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
       toast.success(`${plantName} has been deleted successfully!`);
       if (onDelete) onDelete();
     } catch (e) {
-      console.error("Error deleting plant:", e);
-      toast.error("Failed to delete plant. Please try again.");
+      console.error("Error deleting equipment:", e);
+      toast.error("Failed to delete equipment. Please try again.");
     } finally {
       setIsDeleting(false);
     }

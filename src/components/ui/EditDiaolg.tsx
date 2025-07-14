@@ -20,8 +20,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 import { getPlantById } from "@/actions/plant.action";
 
-type Plant = Awaited<ReturnType<typeof getPlantById>>;
-
+// Define a single Plant interface instead of having both type and interface
 interface Plant {
   id: string;
   name: string;
@@ -79,20 +78,20 @@ export default function EditDialog({ plant }: PlantCardProps) {
             const updatedPlant = await editPlant(plant.id, formDataToSubmit);
             
             if (updatedPlant) {
-                console.log("Plant updated successfully!", updatedPlant);
+                console.log("Equipment updated successfully!", updatedPlant);
                 toast.success(`${updatedPlant.name} has been updated successfully!`);
                 // You might want to close the dialog here
             }
         } catch(e) {
-            console.error("Error updating plant:", e);
-            toast.error("Failed to update plant. Please try again.");
+            console.error("Error updating equipment:", e);
+            toast.error("Failed to update equipment. Please try again.");
         } finally {
             setIsSubmitting(false);
         }
     };
     
     const handleDelete = async () => {
-        if (!confirm("Are you sure you want to delete this plant? This action cannot be undone.")) {
+        if (!confirm("Are you sure you want to delete this equipment? This action cannot be undone.")) {
             return;
         }
         
@@ -102,8 +101,8 @@ export default function EditDialog({ plant }: PlantCardProps) {
             toast.success(`${plant.name} has been deleted successfully!`);
             // You might want to navigate away or close the dialog here
         } catch (e) {
-            console.error("Error deleting plant:", e);
-            toast.error("Failed to delete plant. Please try again.");
+            console.error("Error deleting equipment:", e);
+            toast.error("Failed to delete equipment. Please try again.");
         } finally {
             setIsSubmitting(false);
         }
@@ -118,9 +117,9 @@ export default function EditDialog({ plant }: PlantCardProps) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Edit Plant</AlertDialogTitle>
+          <AlertDialogTitle>Edit Equipment</AlertDialogTitle>
           <AlertDialogDescription className="text-[15px]">
-            Make changes to your plant information below.
+            Make changes to your equipment information below.
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -128,7 +127,7 @@ export default function EditDialog({ plant }: PlantCardProps) {
             <div>
                 <div>
                     <Label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                        Plant Name
+                        Equipment Name
                     </Label>
                     <Input
                         type="text"
@@ -137,7 +136,7 @@ export default function EditDialog({ plant }: PlantCardProps) {
                         required
                         value={formData.name}
                         onChange={(e) => handleChange("name", e.target.value)}
-                        placeholder="Enter plant name"
+                        placeholder="Enter equipment name"
                         className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                     />
                 </div>
@@ -159,13 +158,13 @@ export default function EditDialog({ plant }: PlantCardProps) {
                 required
                 value={formData.description}
                 onChange={(e) => handleChange("description", e.target.value)}
-                placeholder="Enter plant description"
+                placeholder="Enter equipment description"
                 
             />
             <div className="grid grid-cols-2 gap-4 mt-4">
                 <div>
                     <Label htmlFor="stock">
-                        Stock
+                        Available Units
                     </Label> 
                     <Input
                         type="number"
@@ -180,7 +179,7 @@ export default function EditDialog({ plant }: PlantCardProps) {
                 </div>
                 <div>
                     <Label htmlFor="price">
-                        Price
+                        Daily Rental Rate
                     </Label>
                     <Input
                         type="number"
@@ -194,7 +193,7 @@ export default function EditDialog({ plant }: PlantCardProps) {
             </div>
         </div>
 
-        <h1>upload images</h1>
+        <h1>Upload Equipment Images</h1>
        
 
         <AlertDialogFooter className="flex justify-between">
