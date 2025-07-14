@@ -14,6 +14,7 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { Combobox } from "@/components/ui/combo-box";
 import { getPlants } from "@/actions/plant.action";
+import { useRouter } from "next/navigation";
 
 
 
@@ -24,6 +25,8 @@ interface InventoryTableProps {
 }
 
 export default function InventoryTable({ plants }: InventoryTableProps) {
+  const router = useRouter(); 
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -63,8 +66,14 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {filteredPlants?.map((plant: any) => (
-          <TableRow key={plant.id}>
+        {filteredPlants?.map((plant: any) => {
+          const slugifiedName = plant.name.toLowerCase().replace(/\s+/g, '-');
+          const slug = `${plant.id}--${slugifiedName}`;
+          const plantUrl = `/plants/${slug}`;
+          
+          return(
+
+          <TableRow key={plant.id} onClick={()=> router.push(plantUrl)}>
             <TableCell>{plant.id}</TableCell>
             <TableCell>{plant.name}</TableCell>
             <TableCell>{plant.category}</TableCell>
@@ -78,7 +87,7 @@ export default function InventoryTable({ plants }: InventoryTableProps) {
                 </div>
             </TableCell>
           </TableRow>
-        ))}
+        )})}
       </TableBody>
       
     </Table>

@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/popover"
 
 const plantCategories = [
-  { value: "Flowering", label: "Flowering" },
+  { value: "indorr", label: "indorr" },
   { value: "Herb", label: "Herb" },
   { value: "Fern", label: "Fern" },
   { value: "Tree", label: "Tree" },
